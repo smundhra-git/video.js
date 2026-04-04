@@ -74,7 +74,7 @@ jobs:
             ${{ env.ECR_REGISTRY }}/tanagram/maxim/runner:latest \
               --config configs/smoke-test.yaml \
               --url ${{ env.TARGET_URL }}/sandbox/index.html \
-              --browsers cr38,cr44,cr46,cr53,wpe \
+              --browsers cr38,cr44,cr46,cr53,cr66,wpe \
               --parallel 5 \
               --output /results/
 
