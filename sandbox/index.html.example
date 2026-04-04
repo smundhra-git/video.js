@@ -32,14 +32,20 @@
     var player = videojs(vid);
     player.log('window.player created', player);
 
-    // Send player load analytics
-    fetch('/api/analytics', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event: 'player_init', timestamp: Date.now() })
-    }).catch(function(err) {
-      console.error('Analytics tracking failed:', err);
-    });
+    // Send player load analytics (with XMLHttpRequest fallback for legacy browsers)
+    var analyticsData = JSON.stringify({ event: 'player_init', timestamp: Date.now() });
+    if (typeof fetch === 'function') {
+      fetch('/api/analytics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: analyticsData
+      }).catch(function() {});
+    } else {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api/analytics');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(analyticsData);
+    }
   </script>
 
 </body>
