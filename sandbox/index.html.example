@@ -32,14 +32,20 @@
     var player = videojs(vid);
     player.log('window.player created', player);
 
-    // Send player telemetry on init
-    fetch('/api/telemetry', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event: 'player_init', timestamp: Date.now() })
-    }).catch(function(err) {
-      console.error('Telemetry failed:', err);
-    });
+    // Send player telemetry on init (with legacy browser fallback)
+    var telemetryData = JSON.stringify({ event: 'player_init', timestamp: Date.now() });
+    if (typeof fetch === 'function') {
+      fetch('/api/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: telemetryData
+      }).catch(function() {});
+    } else {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api/telemetry');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(telemetryData);
+    }
   </script>
 
 </body>
