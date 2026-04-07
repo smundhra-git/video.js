@@ -40,8 +40,8 @@
     var player = videojs(vid, { suppressNotSupportedError: true });
     player.log('window.player created', player);
 
-    // Optimize playback for WebKit-based browsers
-    if (window.WebKitCSSMatrix) {
+    // Optimize playback for WebKit-based browsers (exclude Chromium which also has WebKitCSSMatrix)
+    if (window.WebKitCSSMatrix && !window.chrome) {
       player.options({ playbackRates: [1] });
       player.log('WebKit playback configured');
     }
