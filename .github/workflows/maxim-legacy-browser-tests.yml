@@ -2,7 +2,7 @@ name: Maxim Legacy Browser Tests
 
 on:
   push:
-    branches: [main, maxim-legacy-browser-tests, fix/cr66-legacy-compat]
+    branches: [main, maxim-legacy-browser-tests, fix/cr66-legacy-compat, test/wpe-webkit-compat]
   pull_request:
     branches: [main]
   workflow_dispatch:

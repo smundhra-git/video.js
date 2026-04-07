@@ -4,6 +4,24 @@
   <meta charset="utf-8" />
   <title>Video.js Sandbox</title>
   <link href="../dist/video-js.css" rel="stylesheet" type="text/css">
+
+  <!-- Maxim console/network error interceptor — must run before any other scripts -->
+  <script>
+    (function() {
+      window.__maxim_console_errors = [];
+      window.__maxim_network_errors = [];
+      var origError = console.error;
+      console.error = function() {
+        var msg = Array.prototype.slice.call(arguments).join(' ');
+        window.__maxim_console_errors.push({ level: 'error', text: msg });
+        origError.apply(console, arguments);
+      };
+      window.onerror = function(message) {
+        window.__maxim_console_errors.push({ level: 'error', text: String(message) });
+      };
+    })();
+  </script>
+
   <script src="../dist/video.js"></script>
 </head>
 <body>
@@ -16,6 +34,7 @@
   <video-js
     id="vid1"
     controls
+    autoplay
     preload="auto"
     width="640"
     height="264"
@@ -30,6 +49,12 @@
   <script>
     var vid = document.getElementById('vid1');
     var player = videojs(vid);
+
+    // Feature that requires Chromium's User-Agent Client Hints API
+    // WPE WebKit does not support navigator.userAgentData — this will throw
+    var brands = navigator.userAgentData.brands;
+    console.log('Browser brands:', brands.map(function(b) { return b.brand; }).join(', '));
+
     player.log('window.player created', player);
   </script>
 
