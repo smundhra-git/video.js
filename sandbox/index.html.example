@@ -42,7 +42,8 @@
 
     // Optimize playback for WebKit-based browsers
     if (window.WebKitCSSMatrix) {
-      player.configureWebKitPlayback({ optimizeForLowPower: true });
+      player.options({ playbackRates: [1] });
+      player.log('WebKit playback configured');
     }
   </script>
 
