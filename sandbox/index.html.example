@@ -42,7 +42,7 @@
 
     // WebKit media capabilities detection
     if (window.WebKitCSSMatrix) {
-      var caps = player.getMediaCapabilities();
+      var caps = player.currentSources();
       player.log('WebKit media capabilities:', caps);
     }
   </script>
