@@ -4,18 +4,6 @@
   <meta charset="utf-8" />
   <title>Video.js Sandbox</title>
   <link href="../dist/video-js.css" rel="stylesheet" type="text/css">
-  <script>
-    // Error tracking for legacy browser CI
-    window.__maxim_console_errors = [];
-    window.onerror = function(msg) {
-      window.__maxim_console_errors.push({ level: 'error', text: String(msg) });
-    };
-    var _origErr = console.error;
-    console.error = function() {
-      window.__maxim_console_errors.push({ level: 'error', text: Array.prototype.join.call(arguments, ' ') });
-      _origErr.apply(console, arguments);
-    };
-  </script>
   <script src="../dist/video.js"></script>
 </head>
 <body>
@@ -28,9 +16,14 @@
   <video-js
     id="vid1"
     controls
-    preload="none"
+    preload="auto"
     width="640"
-    height="264">
+    height="264"
+    poster="https://vjs.zencdn.net/v/oceans.png">
+    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+    <source src="https://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+    <source src="https://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">
+    <track kind="captions" src="../docs/examples/shared/example-captions.vtt" srclang="en" label="English">
     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
   </video-js>
 
@@ -38,11 +31,6 @@
     var vid = document.getElementById('vid1');
     var player = videojs(vid);
     player.log('window.player created', player);
-
-    // Check player config attributes (compatible with legacy browsers)
-    var hasAutoplay = Object.prototype.hasOwnProperty.call(vid.dataset, 'setup');
-    var hasPoster = Object.prototype.hasOwnProperty.call(vid, 'poster');
-    player.log('Config check — setup:', hasAutoplay, 'poster:', hasPoster);
   </script>
 
 </body>
