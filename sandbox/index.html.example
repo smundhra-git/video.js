@@ -32,19 +32,12 @@
     preload="none"
     width="640"
     height="264">
-    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
   </video-js>
 
   <script>
     var vid = document.getElementById('vid1');
     var player = videojs(vid, { suppressNotSupportedError: true });
     player.log('window.player created', player);
-
-    // Optimize playback for WebKit-based browsers (exclude Chromium which also has WebKitCSSMatrix)
-    if (window.WebKitCSSMatrix && !window.chrome) {
-      player.options({ playbackRates: [1] });
-      player.log('WebKit playback configured');
-    }
   </script>
 
 </body>
