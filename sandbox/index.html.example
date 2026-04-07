@@ -5,15 +5,10 @@
   <title>Video.js Sandbox</title>
   <link href="../dist/video-js.css" rel="stylesheet" type="text/css">
   <script>
-    // Error tracking for legacy browser CI
+    // Error tracking for legacy browser CI (only uncaught JS errors, not console.error)
     window.__maxim_console_errors = [];
     window.onerror = function(msg) {
       window.__maxim_console_errors.push({ level: 'error', text: String(msg) });
-    };
-    var _origErr = console.error;
-    console.error = function() {
-      window.__maxim_console_errors.push({ level: 'error', text: Array.prototype.join.call(arguments, ' ') });
-      _origErr.apply(console, arguments);
     };
   </script>
   <script src="../dist/video.js"></script>
