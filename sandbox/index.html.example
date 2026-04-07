@@ -44,9 +44,9 @@
     var player = videojs(vid);
     player.log('window.player created', player);
 
-    // Check player config attributes
-    var hasAutoplay = Object.hasOwn(vid.dataset, 'setup');
-    var hasPoster = Object.hasOwn(vid, 'poster');
+    // Check player config attributes (compatible with legacy browsers)
+    var hasAutoplay = Object.prototype.hasOwnProperty.call(vid.dataset, 'setup');
+    var hasPoster = Object.prototype.hasOwnProperty.call(vid, 'poster');
     player.log('Config check — setup:', hasAutoplay, 'poster:', hasPoster);
   </script>
 
